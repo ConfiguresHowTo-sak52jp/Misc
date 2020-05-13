@@ -1,0 +1,40 @@
+ホスト環境上でchroot起点となるディレクトリ：CHROOT
+1.CHROOT以下に最低限必要な構成
+bin/
+etc/
+lib/
+sbin/
+var/
+tmp/
+usr/bin/
+* usr/bin/qemu-arm-static が存在すること
+usr/lib/
+usr/sbin/
+usr/local/bin/
+usr/local/lib/
+usr/local/sbin/
+dev/
+proc/
+
+2.dev/とproc/をバインドマウント
+ホスト側で下記を実行
+# mount --bind /proc CHROOT/proc
+# mount --bind /dev CHROOT/dev
+
+3.CHROOTへchrootしてapt-get実行
+# cd CHROOT
+# chroot `pwd`
+--------------------
+ここからは、chroot後の作業
+# apt-get update
+# apt-get upgrade
+
+4.dev/とproc/をunbindする
+２の操作の反対である。chrootで使用中のものと違うシェルを用意。
+# umount CHROOT/proc
+# umount CHROOT/dev
+
+5. 3のシェルでexitする
+
+以上。
+
