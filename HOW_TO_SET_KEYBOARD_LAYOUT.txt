@@ -1,0 +1,15 @@
+1.システム全体のデフォルト設定
+/etc/default/keyboardを下記の通り編集する。
+---------------------------------------
+BACKSPACE="guess"
+XKBLAYOUT="jp"
+XKBMODEL="pc109"
+XKBVARIANT=""
+XKBOPTIONS=""
+---------------------------------------
+
+2.Mozcの設定
+/usr/share/ibus/component/mozc.xmlを下記の通り編集する。
+---------------------------------------
+<layout>jp</layout>
+---------------------------------------

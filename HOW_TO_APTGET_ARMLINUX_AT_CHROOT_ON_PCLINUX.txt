@@ -29,12 +29,35 @@ proc/
 # apt-get update
 # apt-get upgrade
 
-4.dev/とproc/をunbindする
-２の操作の反対である。chrootで使用中のものと違うシェルを用意。
+==================================================
+[apt-get updateでubuntu.comへの接続に失敗する時の対応]
+* 3.のディレクトリで
+# mkdir -p /run
+
+* ホスト側で
+# mount --bind /run CHROOT/run
+
+* 再び3.のシェルで
+/etc/resolv.confが実体（シンボリックリンクではない）時
+⇛ バックアップして削除
+
+その後、シンボリックリンクに変更
+# ln -s ../run/systemd/resolve/stub-resolv.conf resolv.conf
+
+これでうまくいくはず。うまくいった
+ら、../run/systemd/resolve/stub-resolv.confを/etc/resolv.confへコピー
+しておけば次回以降、同じホストで実行する限りうまくいく。この時は/runを
+マウントする必要はない。
+==================================================
+
+
+4.作業終了後：3のシェルでexitする
+
+5.dev/とproc/をunbindする
+２の操作の反対である。
 # umount CHROOT/proc
 # umount CHROOT/dev
 
-5. 3のシェルでexitする
 
 以上。
 
